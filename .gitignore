@@ -1,3 +1,6 @@
 node_modules
 .env
 game-hub-firebase-adminsdk.json
+vercel.json
+service_key.js
+.vercel

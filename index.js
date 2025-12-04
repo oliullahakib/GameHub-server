@@ -3,8 +3,10 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-var admin = require("firebase-admin");
-var serviceAccount = require("./game-hub-firebase-adminsdk.json");
+const admin = require("firebase-admin");
+// const serviceAccount = require("./firebase-admin-key.json");
+const decoded = Buffer.from(process.env.FB_SERVICE_KEY, 'base64').toString('utf8')
+const serviceAccount = JSON.parse(decoded);
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -52,7 +54,7 @@ const client = new MongoClient(uri, {
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
+        // await client.connect();
 
         const db = client.db('gameHub')
         const gamesCollection = db.collection('games')
@@ -97,8 +99,8 @@ async function run() {
             res.send(result)
         })
         // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // await client.db("admin").command({ ping: 1 });
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
     } finally {
         // Ensures that the client will close when you finish/error
         // await client.close();
